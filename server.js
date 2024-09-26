@@ -1,5 +1,6 @@
 const http = require("http");
 const url = require("url");
+const path = require("path");
 const { getDate } = require("./modules/utils");
 const { greeting } = require("./lang/en/en");
 
@@ -32,13 +33,14 @@ const server = http.createServer((req, res) => {
       res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("Please provide text in the query string");
     }
-  } else if (pathname === "/COMP4537/readFile/file.txt") {
-    if (fileContent) {
+  } else if (pathname.startsWith("/COMP4537/readFile/")) {
+    const fileName = path.basename(pathname);
+    if (fileName === "file.txt" && fileContent) {
       res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
       res.end(fileContent);
     } else {
       res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end("404 File Not Found: file.txt");
+      res.end(`404 File Not Found: ${fileName}`);
     }
   } else {
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
