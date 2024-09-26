@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
 
-  if (pathname === "/COMP4537/labs/3/getDate/") {
+  if (pathname === "/COMP4537/getDate/") {
     const { name } = parsedUrl.query;
     if (name) {
       const currentDate = getDate();
@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("Please provide a name in the query string");
     }
-  } else if (pathname === "/COMP4537/labs/3/writeFile/") {
+  } else if (pathname === "/COMP4537/writeFile/") {
     const { text } = parsedUrl.query;
     if (text) {
       fs.appendFile("file.txt", text + "\n", (err) => {
@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("Please provide text in the query string");
     }
-  } else if (pathname === "/COMP4537/labs/3/readFile/file.txt") {
+  } else if (pathname === "/COMP4537/readFile/file.txt") {
     fs.readFile("file.txt", "utf8", (err, data) => {
       if (err) {
         if (err.code === "ENOENT") {
